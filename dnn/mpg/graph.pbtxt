@@ -1036,6 +1036,351 @@ node {
   }
 }
 node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/keep_prob"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.800000011920929
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/min"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/max"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/RandomUniform"
+  op: "RandomUniform"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "seed"
+    value {
+      i: 0
+    }
+  }
+  attr {
+    key: "seed2"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/sub"
+  op: "Sub"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/max"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/RandomUniform"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform"
+  op: "Add"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/mul"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/add"
+  op: "Add"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/keep_prob"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/random_uniform"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/Floor"
+  op: "Floor"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/Div"
+  op: "Div"
+  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_0/Dropout/dropout/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Div"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "zero_fraction/zero"
   op: "Const"
   attr {
@@ -1068,7 +1413,7 @@ node {
 node {
   name: "zero_fraction/Equal"
   op: "Equal"
-  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/mul"
   input: "zero_fraction/zero"
   attr {
     key: "T"
@@ -1278,7 +1623,7 @@ node {
   name: "dnn/hiddenlayer_0_activation"
   op: "HistogramSummary"
   input: "dnn/hiddenlayer_0_activation/tag"
-  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -1298,7 +1643,7 @@ node {
 node {
   name: "dnn/hiddenlayer_1/hiddenlayer_1/Shape"
   op: "Shape"
-  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -1789,7 +2134,7 @@ node {
 node {
   name: "dnn/hiddenlayer_1/hiddenlayer_1/MatMul"
   op: "MatMul"
-  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/mul"
   input: "dnn/hiddenlayer_1/weights"
   attr {
     key: "T"
@@ -2071,6 +2416,351 @@ node {
   }
 }
 node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/keep_prob"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.800000011920929
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/min"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/max"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/RandomUniform"
+  op: "RandomUniform"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "seed"
+    value {
+      i: 0
+    }
+  }
+  attr {
+    key: "seed2"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/sub"
+  op: "Sub"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/max"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/RandomUniform"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform"
+  op: "Add"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/mul"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/add"
+  op: "Add"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/keep_prob"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/random_uniform"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/Floor"
+  op: "Floor"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/Div"
+  op: "Div"
+  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_1/Dropout/dropout/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Div"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
   name: "zero_fraction_1/zero"
   op: "Const"
   attr {
@@ -2103,7 +2793,7 @@ node {
 node {
   name: "zero_fraction_1/Equal"
   op: "Equal"
-  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/mul"
   input: "zero_fraction_1/zero"
   attr {
     key: "T"
@@ -2313,7 +3003,7 @@ node {
   name: "dnn/hiddenlayer_1_activation"
   op: "HistogramSummary"
   input: "dnn/hiddenlayer_1_activation/tag"
-  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -2333,7 +3023,7 @@ node {
 node {
   name: "dnn/hiddenlayer_2/hiddenlayer_2/Shape"
   op: "Shape"
-  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -2405,7 +3095,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2431,7 +3121,7 @@ node {
           size: 25
         }
         dim {
-          size: 5
+          size: 10
         }
       }
     }
@@ -2482,7 +3172,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\031\000\000\000\005\000\000\000"
+        tensor_content: "\031\000\000\000\n\000\000\000"
       }
     }
   }
@@ -2520,7 +3210,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: -0.4472135901451111
+        float_val: -0.41403934359550476
       }
     }
   }
@@ -2558,7 +3248,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 0.4472135901451111
+        float_val: 0.41403934359550476
       }
     }
   }
@@ -2590,7 +3280,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2672,7 +3362,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2707,7 +3397,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2742,7 +3432,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2788,7 +3478,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2814,7 +3504,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2824,7 +3514,7 @@ node {
 node {
   name: "dnn/hiddenlayer_2/hiddenlayer_2/MatMul"
   op: "MatMul"
-  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/mul"
   input: "dnn/hiddenlayer_2/weights"
   attr {
     key: "T"
@@ -2841,7 +3531,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2869,7 +3559,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2892,7 +3582,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 10
         }
       }
     }
@@ -2921,7 +3611,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -2940,7 +3630,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
           dim {
-            size: 5
+            size: 10
           }
         }
         float_val: 0.0
@@ -2973,7 +3663,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3016,7 +3706,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3039,7 +3729,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3066,7 +3756,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3098,7 +3788,352 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/keep_prob"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.800000011920929
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/min"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/max"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/RandomUniform"
+  op: "RandomUniform"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "seed"
+    value {
+      i: 0
+    }
+  }
+  attr {
+    key: "seed2"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/sub"
+  op: "Sub"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/max"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/RandomUniform"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform"
+  op: "Add"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/mul"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform/min"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/add"
+  op: "Add"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/keep_prob"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/random_uniform"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/Floor"
+  op: "Floor"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/Div"
+  op: "Div"
+  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "dnn/hiddenlayer_2/Dropout/dropout/mul"
+  op: "Mul"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Div"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
           }
         }
       }
@@ -3138,7 +4173,7 @@ node {
 node {
   name: "zero_fraction_2/Equal"
   op: "Equal"
-  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/mul"
   input: "zero_fraction_2/zero"
   attr {
     key: "T"
@@ -3155,7 +4190,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3187,7 +4222,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -3348,7 +4383,7 @@ node {
   name: "dnn/hiddenlayer_2_activation"
   op: "HistogramSummary"
   input: "dnn/hiddenlayer_2_activation/tag"
-  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -3368,7 +4403,7 @@ node {
 node {
   name: "dnn/logits/logits/Shape"
   op: "Shape"
-  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/mul"
   attr {
     key: "T"
     value {
@@ -3437,7 +4472,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3463,7 +4498,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 10
         }
         dim {
           size: 1
@@ -3517,7 +4552,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\005\000\000\000\001\000\000\000"
+        tensor_content: "\n\000\000\000\001\000\000\000"
       }
     }
   }
@@ -3555,7 +4590,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: -1.0
+        float_val: -0.7385489344596863
       }
     }
   }
@@ -3593,7 +4628,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
         }
-        float_val: 1.0
+        float_val: 0.7385489344596863
       }
     }
   }
@@ -3622,7 +4657,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3704,7 +4739,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3739,7 +4774,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3774,7 +4809,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3820,7 +4855,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3846,7 +4881,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -3859,7 +4894,7 @@ node {
 node {
   name: "dnn/logits/logits/MatMul"
   op: "MatMul"
-  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/mul"
   input: "dnn/logits/weights"
   attr {
     key: "T"
@@ -5805,7 +6840,7 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -5827,7 +6862,7 @@ node {
 node {
   name: "gradients/dnn/logits/logits/MatMul_grad/MatMul_1"
   op: "MatMul"
-  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/mul"
   input: "gradients/sub_1_grad/Reshape"
   attr {
     key: "T"
@@ -5841,7 +6876,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -5864,9 +6899,468 @@ node {
   }
 }
 node {
-  name: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/Relu_grad/ReluGrad"
-  op: "ReluGrad"
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Div"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape_1"
+  op: "Shape"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/mul"
+  op: "Mul"
   input: "gradients/dnn/logits/logits/MatMul_grad/MatMul"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/mul"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/mul_1"
+  op: "Mul"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/Div"
+  input: "gradients/dnn/logits/logits/MatMul_grad/MatMul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/mul_1"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/truediv"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Reshape"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/truediv"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Neg"
+  op: "Neg"
   input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
   attr {
     key: "T"
@@ -5883,7 +7377,169 @@ node {
             size: -1
           }
           dim {
-            size: 5
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Square"
+  op: "Square"
+  input: "dnn/hiddenlayer_2/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/truediv_1"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Neg"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Square"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/mul"
+  op: "Mul"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/mul_grad/Reshape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/truediv_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/mul"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/Relu_grad/ReluGrad"
+  op: "ReluGrad"
+  input: "gradients/dnn/hiddenlayer_2/Dropout/dropout/Div_grad/Reshape"
+  input: "dnn/hiddenlayer_2/hiddenlayer_2/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 10
           }
         }
       }
@@ -5906,7 +7562,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -5961,7 +7617,7 @@ node {
 node {
   name: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/MatMul_grad/MatMul_1"
   op: "MatMul"
-  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/mul"
   input: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/Relu_grad/ReluGrad"
   attr {
     key: "T"
@@ -5978,7 +7634,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -5998,9 +7654,630 @@ node {
   }
 }
 node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Div"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape_1"
+  op: "Shape"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/mul"
+  op: "Mul"
+  input: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/MatMul_grad/MatMul"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/mul"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/mul_1"
+  op: "Mul"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/Div"
+  input: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/MatMul_grad/MatMul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/mul_1"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/truediv"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Reshape"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/truediv"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Neg"
+  op: "Neg"
+  input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Square"
+  op: "Square"
+  input: "dnn/hiddenlayer_1/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/truediv_1"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Neg"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Square"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/mul"
+  op: "Mul"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/mul_grad/Reshape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/truediv_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 25
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/mul"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
   name: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/Relu_grad/ReluGrad"
   op: "ReluGrad"
-  input: "gradients/dnn/hiddenlayer_2/hiddenlayer_2/MatMul_grad/MatMul"
+  input: "gradients/dnn/hiddenlayer_1/Dropout/dropout/Div_grad/Reshape"
   input: "dnn/hiddenlayer_1/hiddenlayer_1/Relu"
   attr {
     key: "T"
@@ -6095,7 +8372,7 @@ node {
 node {
   name: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/MatMul_grad/MatMul_1"
   op: "MatMul"
-  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/mul"
   input: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/Relu_grad/ReluGrad"
   attr {
     key: "T"
@@ -6132,9 +8409,630 @@ node {
   }
 }
 node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Div"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape_1"
+  op: "Shape"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/mul"
+  op: "Mul"
+  input: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/MatMul_grad/MatMul"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Floor"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/mul"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/mul_1"
+  op: "Mul"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/Div"
+  input: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/MatMul_grad/MatMul"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/mul_1"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape"
+  op: "Shape"
+  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: 2
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+        }
+        shape {
+          dim {
+            size: -1
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/truediv"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Reshape"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Sum"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/truediv"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Reshape"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Neg"
+  op: "Neg"
+  input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Square"
+  op: "Square"
+  input: "dnn/hiddenlayer_0/Dropout/dropout/keep_prob"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/truediv_1"
+  op: "Div"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Neg"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Square"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/mul"
+  op: "Mul"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/mul_grad/Reshape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/truediv_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size: -1
+          }
+          dim {
+            size: 50
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Sum_1"
+  op: "Sum"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/mul"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          unknown_rank: true
+        }
+      }
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Reshape_1"
+  op: "Reshape"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Sum_1"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+        }
+      }
+    }
+  }
+}
+node {
   name: "gradients/dnn/hiddenlayer_0/hiddenlayer_0/Relu_grad/ReluGrad"
   op: "ReluGrad"
-  input: "gradients/dnn/hiddenlayer_1/hiddenlayer_1/MatMul_grad/MatMul"
+  input: "gradients/dnn/hiddenlayer_0/Dropout/dropout/Div_grad/Reshape"
   input: "dnn/hiddenlayer_0/hiddenlayer_0/Relu"
   attr {
     key: "T"
@@ -7005,7 +9903,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7027,7 +9925,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
         float_val: 0.10000000149011612
@@ -7055,7 +9953,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7081,7 +9979,7 @@ node {
           size: 25
         }
         dim {
-          size: 5
+          size: 10
         }
       }
     }
@@ -7121,7 +10019,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7167,7 +10065,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7191,7 +10089,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7210,7 +10108,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
           dim {
-            size: 5
+            size: 10
           }
         }
         float_val: 0.10000000149011612
@@ -7235,7 +10133,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7258,7 +10156,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 10
         }
       }
     }
@@ -7295,7 +10193,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7338,7 +10236,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7362,7 +10260,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -7384,7 +10282,7 @@ node {
         dtype: DT_FLOAT
         tensor_shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -7412,7 +10310,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -7438,7 +10336,7 @@ node {
     value {
       shape {
         dim {
-          size: 5
+          size: 10
         }
         dim {
           size: 1
@@ -7478,7 +10376,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -7524,7 +10422,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -7931,7 +10829,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -7971,7 +10869,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -8011,7 +10909,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -10672,14 +13570,14 @@ node {
         string_val: "25 0,25"
         string_val: "50 25 0,50:0,25"
         string_val: "50 25 0,50:0,25"
-        string_val: "5 0,5"
-        string_val: "5 0,5"
-        string_val: "25 5 0,25:0,5"
-        string_val: "25 5 0,25:0,5"
+        string_val: "10 0,10"
+        string_val: "10 0,10"
+        string_val: "25 10 0,25:0,10"
+        string_val: "25 10 0,25:0,10"
         string_val: "1 0,1"
         string_val: "1 0,1"
-        string_val: "5 1 0,5:0,1"
-        string_val: "5 1 0,5:0,1"
+        string_val: "10 1 0,10:0,1"
+        string_val: "10 1 0,10:0,1"
         string_val: ""
       }
     }
@@ -11985,7 +14883,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 0,5"
+        string_val: "10 0,10"
       }
     }
   }
@@ -12040,7 +14938,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -12126,7 +15024,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 0,5"
+        string_val: "10 0,10"
       }
     }
   }
@@ -12181,7 +15079,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -12267,7 +15165,7 @@ node {
             size: 1
           }
         }
-        string_val: "25 5 0,25:0,5"
+        string_val: "25 10 0,25:0,10"
       }
     }
   }
@@ -12325,7 +15223,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -12411,7 +15309,7 @@ node {
             size: 1
           }
         }
-        string_val: "25 5 0,25:0,5"
+        string_val: "25 10 0,25:0,10"
       }
     }
   }
@@ -12469,7 +15367,7 @@ node {
             size: 25
           }
           dim {
-            size: 5
+            size: 10
           }
         }
       }
@@ -12837,7 +15735,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 1 0,5:0,1"
+        string_val: "10 1 0,10:0,1"
       }
     }
   }
@@ -12892,7 +15790,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
@@ -12981,7 +15879,7 @@ node {
             size: 1
           }
         }
-        string_val: "5 1 0,5:0,1"
+        string_val: "10 1 0,10:0,1"
       }
     }
   }
@@ -13036,7 +15934,7 @@ node {
       list {
         shape {
           dim {
-            size: 5
+            size: 10
           }
           dim {
             size: 1
